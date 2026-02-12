@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Anish AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Lottie -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <!-- Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Chats</h2>
+    <button onclick="newChat()">+ New Chat</button>
+    <div id="chatList"></div>
+  </div>
+
+  <!-- Main Chat -->
+  <div class="chat-container">
+
+    <div class="chat-header">
+      <div class="header-left">
+        <img src="assets/hanuman.png" alt="Avatar" class="app-avatar" />
+        <span id="chatHeaderName">Anish AI</span>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" id="themeToggle" />
+        <span>🌗</span>
+      </label>
+    </div>
+
+    <div class="chat-box" id="chatBox"></div>
+
+    <div class="input-area">
+      <button onclick="startVoice()">🎙</button>
+      <input type="text" id="userInput" placeholder="Ask anything..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
