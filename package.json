@@ -16,8 +16,8 @@
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
     "openai": "^6.21.0"
-  },
-  "devDependencies": {
-    "electron": "^30.0.0"
-  }
+ }
+
 }
+
+  
