@@ -13,6 +13,14 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+<div class="fx-layer">
+  <div class="flag-bg" aria-hidden="true">
+    <div class="flag-band saffron"></div>
+    <div class="flag-band white"></div>
+    <div class="flag-band green"></div>
+    <div class="chakra"></div>
+  </div>
+</div>
 
 <div class="app">
 
@@ -48,6 +56,28 @@
 
   </div>
 
+</div>
+
+<div id="newChatModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="newChatTitle">
+  <div class="modal-card">
+    <h3 id="newChatTitle">Create Character</h3>
+    <label for="characterNameInput">Character Name</label>
+    <input id="characterNameInput" type="text" maxlength="40" placeholder="New Character" />
+
+    <label for="characterAvatarInput">Avatar (emoji or text)</label>
+    <input id="characterAvatarInput" type="text" maxlength="6" placeholder="AI" />
+    <label for="characterAvatarFile">Your Avatar</label>
+    <button type="button" class="avatar-picker-btn" onclick="openAvatarPicker()">Upload Image</button>
+    <input id="characterAvatarFile" class="avatar-file-input" type="file" accept="image/*" />
+    <div id="characterAvatarPreview" class="avatar-preview hidden" aria-hidden="true">
+      <img id="characterAvatarPreviewImg" alt="Avatar preview" />
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="modal-cancel" onclick="closeNewChatModal()">Cancel</button>
+      <button type="button" class="modal-create" onclick="submitNewChatModal()">Create</button>
+    </div>
+  </div>
 </div>
 
 <script src="script.js"></script>

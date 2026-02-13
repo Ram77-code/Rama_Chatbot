@@ -7,7 +7,71 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
+
+.fx-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flag-bg {
+  position: absolute;
+  width: min(640px, 72vw);
+  aspect-ratio: 3 / 2;
+  right: -130px;
+  bottom: -70px;
+  border-radius: 18px;
+  overflow: hidden;
+  transform: rotate(-10deg);
+  box-shadow: 0 28px 70px rgba(2, 6, 23, 0.45);
+  opacity: 0.23;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.flag-band {
+  height: 33.333%;
+  width: 100%;
+}
+
+.flag-band.saffron {
+  background: #ff9933;
+}
+
+.flag-band.white {
+  background: #ffffff;
+}
+
+.flag-band.green {
+  background: #138808;
+}
+
+.chakra {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 92px;
+  height: 92px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 5px solid #000080;
+}
+
+.chakra::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      #000080 0deg 3deg,
+      transparent 3deg 15deg
+    );
+}
+
 
 .app {
   display: flex;
@@ -18,6 +82,103 @@ body {
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
   overflow: hidden;
   border: 1px solid rgba(148, 163, 184, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.modal-card {
+  width: min(420px, calc(100% - 32px));
+  background: #111827;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.75);
+}
+
+.modal-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+}
+
+.modal-card label {
+  display: block;
+  margin: 10px 0 6px;
+  color: #cbd5e1;
+  font-size: 0.86rem;
+}
+
+.modal-card input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.avatar-picker-btn {
+  width: 100%;
+  margin-top: 2px;
+  background: #1e293b;
+  border: 1px solid rgba(71, 85, 105, 0.9);
+  color: #cbd5e1;
+}
+
+.avatar-picker-btn:hover {
+  background: #334155;
+}
+
+.avatar-file-input {
+  display: none;
+}
+
+.avatar-preview {
+  margin-top: 8px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #0f172a;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.modal-actions button {
+  min-width: 86px;
+}
+
+.modal-create {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-color: transparent;
+  color: #eff6ff;
+}
+
+.modal-cancel {
+  background: #1f2937;
 }
 
 /* Sidebar */
@@ -85,7 +246,25 @@ body {
 }
 
 .chat-avatar {
-  font-size: 1rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.chat-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .chat-title {
@@ -183,10 +362,31 @@ body {
   line-height: 1.4;
 }
 
+.bot.typing::after {
+  content: "|";
+  margin-left: 2px;
+  font-weight: 700;
+  animation: caret-blink 0.7s steps(1, end) infinite;
+}
+
 .bot.thinking {
   background: #6b7280;
   color: white;
   font-style: italic;
+  position: relative;
+  min-width: 72px;
+}
+
+.bot.thinking::after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-left: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 8px 0 0 currentColor, 16px 0 0 currentColor;
+  animation: thinking-dots 1s infinite linear;
 }
 
 .input-area {
@@ -300,15 +500,72 @@ button {
   }
 }
 
+@keyframes thinking-dots {
+  0%, 20% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes caret-blink {
+  0%, 45% {
+    opacity: 1;
+  }
+  46%, 100% {
+    opacity: 0;
+  }
+}
+
 /* Light theme overrides */
 body.light {
   background: #e5e7eb;
   color: #111827;
 }
 
+body.light .flag-bg {
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+  opacity: 0.3;
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
 body.light .app {
   background: #f9fafb;
   box-shadow: 0 24px 50px rgba(15, 23, 42, 0.25);
+}
+
+body.light .modal-overlay {
+  background: rgba(15, 23, 42, 0.25);
+}
+
+body.light .modal-card {
+  background: #f8fafc;
+  border-color: rgba(148, 163, 184, 0.45);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+}
+
+body.light .modal-card label {
+  color: #475569;
+}
+
+body.light .avatar-preview {
+  background: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.55);
+}
+
+body.light .avatar-picker-btn {
+  background: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.9);
+  color: #0f172a;
+}
+
+body.light .modal-cancel {
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 body.light .sidebar {
@@ -376,4 +633,19 @@ body.light .switch input {
 
 body.light .switch input:checked {
   background: #4b5563;
+}
+
+@media (max-width: 768px) {
+  .flag-bg {
+    width: 84vw;
+    right: -110px;
+    bottom: -40px;
+    opacity: 0.2;
+  }
+
+  .chakra {
+    width: 64px;
+    height: 64px;
+    border-width: 4px;
+  }
 }
