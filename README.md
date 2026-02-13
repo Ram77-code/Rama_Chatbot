@@ -3,7 +3,6 @@
 A modern AI-powered chatbot built with Node.js & Express, designed with a clean UI and smooth conversational experience.
 
 🌐 Live Demo: <a href='https://rama-chatbot.onrender.com/'>✨Rama_Chatbot is live now</a>
-📦 GitHub Repo: https://github.com/Ram77-code/Rama_Chatbot
 
 ✨ Features
 
