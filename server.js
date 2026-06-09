@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const express = require("express");
 const path = require("path");
 const OpenAI = require("openai");
@@ -7,7 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.GEMINI_API_KEY,
+  baseURL: process.env.GEMINI_BASE_URL
 });
 
 app.use(express.json());
@@ -27,7 +28,7 @@ app.post("/chat", async (req, res) => {
     }
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: process.env.GEMINI_MODEL || "gemini-2.5-flash",
       messages: [
         {
           role: "system",
